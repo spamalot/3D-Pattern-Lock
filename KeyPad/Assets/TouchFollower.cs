@@ -1,17 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TouchFollower : MonoBehaviour {
 
-    public Canvas canvas;
+    public DragController dragController;
 
-    // Changing this has no effect, only for reading purposes
-    public Vector2 posn;
-
-    void Update () {
-        var r = canvas.GetComponent<RectTransform>();
-        Vector2 x;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(r, Input.mousePosition, null, out x);
-        posn = x - new Vector2(-240, 400);
-        GetComponent<RectTransform>().anchoredPosition = x;
+    void Update()
+    {
+        GetComponent<RectTransform>().anchoredPosition = Util.PixelToCanvas(dragController.posn);
     }
+
 }
