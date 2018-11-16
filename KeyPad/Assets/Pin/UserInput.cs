@@ -4,7 +4,7 @@ using System;
 using UnityEngine.UI;
 using UnityEngine;
 
-public class UserInput : MonoBehaviour {
+public class UserInput : PinTechnique {
 
     public GameObject[] buttons;
     public Text txtInput;
@@ -16,6 +16,7 @@ public class UserInput : MonoBehaviour {
     void Start () {
         m_Gyro = Input.gyro;
         m_Gyro.enabled = true;
+        numsSoFar.Clear();
     }
 
     void Awake ()
@@ -26,7 +27,7 @@ public class UserInput : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-
+        /*
         if (Input.touchCount > 0) {
             //Touch myTouch = Input.touches[0];
             Touch myTouch = Input.GetTouch(0);
@@ -42,25 +43,31 @@ public class UserInput : MonoBehaviour {
                 Debug.Log("PIN ENTRY " + System.DateTime.Now + " : " + myTouch.position);
             }
         }
+        */
 
-        Debug.Log("Gyro rotation rate " + m_Gyro.rotationRate);
-        Debug.Log("Gyro attitude" + m_Gyro.attitude);
-        Debug.Log("Gyro enabled : " + m_Gyro.enabled);
+       // Debug.Log("Gyro rotation rate " + m_Gyro.rotationRate);
+       // Debug.Log("Gyro attitude" + m_Gyro.attitude);
+       // Debug.Log("Gyro enabled : " + m_Gyro.enabled);
 
 
 
     }
 
-
+    void End() {
+        Debug.Log(passwordEntered);
+        passwordEntered = "";
+        txtInput.text = "";
+        Commit();
+    }
+   
     public void OnClickBtn(int buttPressed)
     {
         txtInput.text = txtInput.text + "*";
+        numsSoFar.Add(buttPressed);
         passwordEntered = passwordEntered + buttPressed.ToString();
         if(passwordEntered.Length == 4)
         {
-            Debug.Log(passwordEntered);
-            passwordEntered = "";
-            txtInput.text = "";
+            End();
         }
     }
 

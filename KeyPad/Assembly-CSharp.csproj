@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Assets\DragController.cs" />
     <Compile Include="Assets\Pattern\TouchTest.cs" />
+    <Compile Include="Assets\Pin\UserInput.cs" />
     <Compile Include="Assets\PinTechnique.cs" />
     <Compile Include="Assets\TouchFollower.cs" />
     <Compile Include="Assets\UnityUIExtensions\BezierPath.cs" />
@@ -69,7 +70,6 @@
     <Compile Include="Assets\UnityUIExtensions\SetPropertyUtility.cs" />
     <Compile Include="Assets\UnityUIExtensions\UILineRenderer.cs" />
     <Compile Include="Assets\UnityUIExtensions\UIPrimitiveBase.cs" />
-    <Compile Include="Assets\UserInput.cs" />
     <Compile Include="Assets\Util.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>/Users/yixinwang/cs858/KeyPad/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
