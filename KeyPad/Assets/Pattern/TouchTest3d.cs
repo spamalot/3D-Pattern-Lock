@@ -1,18 +1,28 @@
 ﻿
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TouchTest3d : PinTechnique {
 
-	public float leftOffset = 114;
+	/*public float leftOffset = 114;
 	public float topOffset = 332;
-	public float spacing = 127;
+	public float spacing = 127;*/
     public GameObject pointsPattern;
 
     public DragController dragController;
     public UnityEngine.UI.Extensions.UILineRenderer lr;
+    public RectTransform cursor;
+    public UnityEngine.UI.Text textThing;
 
-    private List<Vector2> pts = new List<Vector2>();
+    public LocalCoordThing localCoordThing;
+
+    private class Thing {
+        public Vector2 pt;
+        public Vector3 actualPt;
+    }
+
+    private List<Thing> pts = new List<Thing>();
     private List<Vector2> linePts = new List<Vector2>();
 
     /*
@@ -21,10 +31,10 @@ public class TouchTest3d : PinTechnique {
      * 6 7 8
      */
 
-    int? NearestGridCell(Vector2 pos) {
+    int? NearestGridCell(Vector3 pos) {
 
         for (int i = 0; i < 27; i++) {
-            if (Vector2.Distance(pos, pts[i]) < 30) {
+            if (Vector3.Distance(pos, pts[i].actualPt) < 50) {
                 return i;
             }
         }
@@ -40,7 +50,16 @@ public class TouchTest3d : PinTechnique {
 
     void Update()
     {
-        var gcx = NearestGridCell(dragController.posn);
+
+        var pp = localCoordThing.posn;
+        var ppxy = new Vector2(pp.x, pp.y);
+        var pk = (pp.z - 200f) / 120f;
+        textThing.text = pk.ToString();
+        ppxy += new Vector2(pk*40, -pk*40);
+        cursor.anchoredPosition = Util.PixelToCanvas(ppxy);
+
+
+        var gcx = NearestGridCell(localCoordThing.posn);// dragController.posn);
 
         if (gcx == null)
         {
@@ -52,9 +71,11 @@ public class TouchTest3d : PinTechnique {
         if (!numsSoFar.Contains(gc))
         {
             numsSoFar.Add(gc);
-            var foo = Util.PixelToCanvas(pts[gc]);
+            var foo = Util.PixelToCanvas(pts[gc].pt);
             linePts.Add(foo);
         }
+
+
 
         lr.Points = linePts.ToArray();
     }
@@ -65,17 +86,44 @@ public class TouchTest3d : PinTechnique {
     }
 
     void Start () {
-        foreach (Transform child in pointsPattern.transform)
+        /*foreach (RectTransform child in pointsPattern.GetComponent<RectTransform>())
         {
-            pts.Add(new Vector2(child.position.x, child.position.y));
+            pts.Add(Util.CanvasToPixel(child.anchoredPosition));
+        }*/
+
+        /* float leftOffset = 50;
+          float topOffset = 438;
+          float spacing = 120;*/
+        // k*64
+
+        float leftOffset = 50;
+        float topOffset = 438;
+        float spacing = 120;
+
+
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                for (int k = 0; k < 3; k++)
+                {
+                //var k = 0;
+                    pts.Add(
+                        new Thing{
+                            pt = new Vector2(leftOffset + spacing * j + k*40, topOffset + spacing * i - k*40),
+                            actualPt = new Vector3(leftOffset + spacing * j, topOffset + spacing * i, 200+ k * spacing) });
+                }
+            }
         }
 
-
-        foreach (var p in pts) {
+        Debug.Log(string.Join(",",pts.Select(x => x.ToString())));
+  foreach (var p in pts) {
             Debug.Log(p);
         }
 
-        dragController.OnPressed += OnBegin;
+
+
+ dragController.OnPressed += OnBegin;
         dragController.OnReleased += OnEnd;
     }
 	

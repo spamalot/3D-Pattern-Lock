@@ -6,9 +6,8 @@ public abstract class PinTechnique : MonoBehaviour {
 
     public List<int> numsSoFar = new List<int>();
 
-    List<int> rightPin = new List<int> { 1, 2, 3, 5 };
+    public List<int> rightPin = new List<int> { 1, 2, 3, 5 };
 
-    // some way to know right pin
 
     // some comparison of pins
 
