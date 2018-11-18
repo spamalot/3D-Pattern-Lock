@@ -26,6 +26,12 @@ public class BigNetworkExperiment : NetworkBehaviour {
         serverController.OnDrag(pos);
     }
 
+    [Command]
+    void CmdOnButtonPress(string text) {
+        Debug.Log("client pressed " + text);
+        serverController.OnButtonPress(text);
+    }
+
     void XBeginDrag() {
         if (!isLocalPlayer) {
             return;
@@ -45,6 +51,13 @@ public class BigNetworkExperiment : NetworkBehaviour {
             return;
         }
         CmdOnDrag(pos);
+    }
+
+    void XOnButtonPress(string text) {
+        if (!isLocalPlayer) {
+            return;
+        }
+        CmdOnButtonPress(text);
     }
 
     void XEnteredNumbersChanged(int[] numbers) {
@@ -102,6 +115,7 @@ public class BigNetworkExperiment : NetworkBehaviour {
         data.dragController.OnPressed += XBeginDrag;
         data.dragController.OnReleased += XEndDrag;
         data.dragController.OnDragged += XOnDrag;
+        data.buttonController.OnButtonPress += XOnButtonPress;
         data.experimentServerController.OnTechniqueChanged += XSetTechnique;
     }
 

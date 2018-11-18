@@ -7,6 +7,7 @@ public abstract class TechniqueServerController : MonoBehaviour {
     public virtual void OnBeginDrag() { }
     public virtual void OnEndDrag() { }
     public virtual void OnDrag(Vector2 pos) { }
+    public virtual void OnButtonPress(string text) { }
 
     public List<int> enteredNumbers = new List<int>();
 

@@ -585,6 +585,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragController: {fileID: 830701458}
+  buttonController: {fileID: 830701459}
   deviceSpecializer: {fileID: 915862165}
   experimentServerController: {fileID: 1962066641}
   experimentClientController: {fileID: 1962066643}
@@ -1072,6 +1073,7 @@ GameObject:
   - component: {fileID: 830701455}
   - component: {fileID: 830701454}
   - component: {fileID: 830701458}
+  - component: {fileID: 830701459}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1171,6 +1173,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   posn: {x: 0, y: 0}
   pressed: 0
+--- !u!114 &830701459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 830701453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e62fc6d2d93251c4da9c1d8970fd9e81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &882568903
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,6 +11,8 @@ public class UserInput : TechniqueClientController {
     public GameObject buttonPrefab;
     public Transform buttonContainer;
     public Text txtInput;
+
+    public ButtonController buttonController;
   
     List<Button> buttons = new List<Button>();
 
@@ -42,6 +44,7 @@ public class UserInput : TechniqueClientController {
         for (int i = 0; i < 10; i++) {
             var x = i; // curry i (C# doesn't support this nicely any other way)
             buttons[i].onClick.AddListener(() => OnClickBtn(x));
+            // TODO: just call buttonController.ButtonPressed with button's text
         }
 
 
@@ -80,7 +83,7 @@ public class UserInput : TechniqueClientController {
         Debug.Log(passwordEntered);
         passwordEntered = "";
         txtInput.text = "";
-        Commit();
+        //Commit();
     }
    
      void OnClickBtn(int buttPressed)
@@ -102,6 +105,6 @@ public class UserInput : TechniqueClientController {
         button.GetComponent<RectTransform>().anchoredPosition = pos;
         return button.GetComponent<Button>();
     }
-
     */
+    
 }
