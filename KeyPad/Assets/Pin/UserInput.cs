@@ -6,21 +6,38 @@ using UnityEngine;
 
 public class UserInput : PinTechnique {
 
-    public GameObject[] buttons;
+    public GameObject buttonPrefab;
+    public GameObject backgroundParent;
     public Text txtInput;
+  
+    List<Button> buttons = new List<Button>();
 
     Gyroscope m_Gyro;
     private string passwordEntered;
     
     // Use this for initialization
     void Start () {
-        m_Gyro = Input.gyro;
+        float startX = -817;
+        float startY = 95;
+        float spacingX = 132;
+        float spacingY = 97;
+    m_Gyro = Input.gyro;
         m_Gyro.enabled = true;
         numsSoFar.Clear();
-    }
-
-    void Awake ()
-    {
+        buttons.Add(CreateButton(new Vector2(startX+spacingX*2, startY-spacingY*4)));
+        for (int i = 0; i < 3; i++){
+            startY = startY - spacingY;
+            startX = -817;
+            for (int j = 0; j < 3; j++){
+                startX = startX + spacingX;
+                buttons.Add(CreateButton(new Vector2(startX, startY)));
+            }
+        }
+      
+        for (int i = 0; i < 10; i++){
+            int x = i;
+            buttons[i].onClick.AddListener(() => OnClickBtn(x));
+        }
 
 
     }
@@ -60,8 +77,9 @@ public class UserInput : PinTechnique {
         Commit();
     }
    
-    public void OnClickBtn(int buttPressed)
+     void OnClickBtn(int buttPressed)
     {
+        Debug.Log("num: " + buttPressed);
         txtInput.text = txtInput.text + "*";
         numsSoFar.Add(buttPressed);
         passwordEntered = passwordEntered + buttPressed.ToString();
@@ -71,5 +89,13 @@ public class UserInput : PinTechnique {
         }
     }
 
- 
+    public Button CreateButton(Vector2 pos)
+    {
+        GameObject button = Instantiate(buttonPrefab);
+        button.transform.SetParent(backgroundParent.transform, false);
+        button.GetComponent<RectTransform>().anchoredPosition = pos;
+        return button.GetComponent<Button>();
+    }
+
+
 }

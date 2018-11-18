@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyPad", "Assembly-CSharp.csproj", "{E55B6B77-F7C4-EC0C-4492-B6DD8FDC7A3D}"
+# Visual Studio for Mac
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{E55B6B77-F7C4-EC0C-4492-B6DD8FDC7A3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyPad", "Assembly-CSharp-firstpass.csproj", "{79175BC7-230D-22DA-BA92-95B8FF4A8F0B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-firstpass", "Assembly-CSharp-firstpass.csproj", "{79175BC7-230D-22DA-BA92-95B8FF4A8F0B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
