@@ -15,7 +15,9 @@ public class UserInput : PinTechnique {
     Gyroscope m_Gyro;
     private string passwordEntered;
     
-    void Start () {
+    protected override void Start () {
+        base.Start();
+
         m_Gyro = Input.gyro;
         m_Gyro.enabled = true;
 

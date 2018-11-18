@@ -63,15 +63,16 @@ public class TouchTest : PinTechnique {
         Commit();
     }
 
-    void Start () {
+    protected override void Start() {
+        base.Start();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 pts.Add(new Vector2(leftOffset + spacing * j, topOffset + spacing * i));
             }
         }
-        foreach (var p in pts) {
+        /*foreach (var p in pts) {
             Debug.Log(p);
-        }
+        }*/
 
         dragController.OnPressed += OnBegin;
         dragController.OnReleased += OnEnd;

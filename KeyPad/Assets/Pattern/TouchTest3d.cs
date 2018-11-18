@@ -10,7 +10,6 @@ public class TouchTest3d : PinTechnique {
 	public float spacing = 127;*/
     public GameObject pointsPattern;
 
-    public DragController dragController;
     public UnityEngine.UI.Extensions.UILineRenderer lr;
     public RectTransform cursor;
     public UnityEngine.UI.Text textThing;
@@ -85,7 +84,8 @@ public class TouchTest3d : PinTechnique {
         Commit();
     }
 
-    void Start () {
+    protected override void Start () {
+        base.Start();
         /*foreach (RectTransform child in pointsPattern.GetComponent<RectTransform>())
         {
             pts.Add(Util.CanvasToPixel(child.anchoredPosition));
@@ -122,9 +122,8 @@ public class TouchTest3d : PinTechnique {
         }
 
 
+  // TODO TODO!!!! end pin after four numbers reached
 
- dragController.OnPressed += OnBegin;
-        dragController.OnReleased += OnEnd;
     }
 	
 
