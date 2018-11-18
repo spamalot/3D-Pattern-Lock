@@ -7,7 +7,7 @@ using UnityEngine;
 public class UserInput : PinTechnique {
 
     public GameObject buttonPrefab;
-    public GameObject backgroundParent;
+    public Transform buttonContainer;
     public Text txtInput;
   
     List<Button> buttons = new List<Button>();
@@ -15,34 +15,36 @@ public class UserInput : PinTechnique {
     Gyroscope m_Gyro;
     private string passwordEntered;
     
-    // Use this for initialization
     void Start () {
-        float startX = -817;
-        float startY = 95;
-        float spacingX = 132;
-        float spacingY = 97;
-    m_Gyro = Input.gyro;
+        m_Gyro = Input.gyro;
         m_Gyro.enabled = true;
+
+        float startX = -24;
+        float startY = -316;
+        float spacingX = 132;
+        float spacingY = 92;
         numsSoFar.Clear();
-        buttons.Add(CreateButton(new Vector2(startX+spacingX*2, startY-spacingY*4)));
-        for (int i = 0; i < 3; i++){
+
+        buttons.Add(CreateButton(new Vector2(startX + spacingX * 2, startY - spacingY * 4)));
+        for (int i = 0; i < 3; i++) {
             startY = startY - spacingY;
-            startX = -817;
+            startX = -24;
             for (int j = 0; j < 3; j++){
                 startX = startX + spacingX;
                 buttons.Add(CreateButton(new Vector2(startX, startY)));
             }
         }
       
-        for (int i = 0; i < 10; i++){
-            int x = i;
+        for (int i = 0; i < 10; i++) {
+            var x = i; // curry i (C# doesn't support this nicely any other way)
             buttons[i].onClick.AddListener(() => OnClickBtn(x));
         }
 
 
+       
+
     }
 
-    // Update is called once per frame
     void Update () {
         /*
         if (Input.touchCount > 0) {
@@ -92,7 +94,7 @@ public class UserInput : PinTechnique {
     public Button CreateButton(Vector2 pos)
     {
         GameObject button = Instantiate(buttonPrefab);
-        button.transform.SetParent(backgroundParent.transform, false);
+        button.transform.SetParent(buttonContainer);
         button.GetComponent<RectTransform>().anchoredPosition = pos;
         return button.GetComponent<Button>();
     }
