@@ -4,8 +4,10 @@ using System;
 using UnityEngine.UI;
 using UnityEngine;
 
-public class UserInput : PinTechnique {
+public class UserInput : TechniqueClientController {
 
+    /*
+     
     public GameObject buttonPrefab;
     public Transform buttonContainer;
     public Text txtInput;
@@ -48,23 +50,23 @@ public class UserInput : PinTechnique {
     }
 
     void Update () {
-        /*
-        if (Input.touchCount > 0) {
-            //Touch myTouch = Input.touches[0];
-            Touch myTouch = Input.GetTouch(0);
-            if (myTouch.phase == TouchPhase.Began)
-            {
-                Debug.Log("PIN ENTRY " + System.DateTime.Now + " : Begun " + myTouch.position + "\n");
-            }else if(myTouch.phase == TouchPhase.Ended)
-            {
-                Debug.Log("PIN ENTRY " + System.DateTime.Now + " :  End " + myTouch.position + "\n");
-            }
-            else
-            {
-                Debug.Log("PIN ENTRY " + System.DateTime.Now + " : " + myTouch.position);
-            }
-        }
-        */
+    
+        //if (Input.touchCount > 0) {
+        //    //Touch myTouch = Input.touches[0];
+        //    Touch myTouch = Input.GetTouch(0);
+        //    if (myTouch.phase == TouchPhase.Began)
+        //    {
+        //        Debug.Log("PIN ENTRY " + System.DateTime.Now + " : Begun " + myTouch.position + "\n");
+        //    }else if(myTouch.phase == TouchPhase.Ended)
+        //    {
+        //        Debug.Log("PIN ENTRY " + System.DateTime.Now + " :  End " + myTouch.position + "\n");
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("PIN ENTRY " + System.DateTime.Now + " : " + myTouch.position);
+        //    }
+        //}
+  
 
        // Debug.Log("Gyro rotation rate " + m_Gyro.rotationRate);
        // Debug.Log("Gyro attitude" + m_Gyro.attitude);
@@ -101,5 +103,5 @@ public class UserInput : PinTechnique {
         return button.GetComponent<Button>();
     }
 
-
+    */
 }

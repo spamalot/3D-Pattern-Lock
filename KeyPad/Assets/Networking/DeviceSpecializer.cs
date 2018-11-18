@@ -5,7 +5,7 @@ public class DeviceSpecializer : MonoBehaviour {
     public GameObject desktopStuff;
     public GameObject mobileStuff;
 
-    public enum DeviceType { Desktop, Mobile };
+    public enum DeviceType { Unset, Desktop, Mobile };
 
     public DeviceType Type { get; private set; }
 

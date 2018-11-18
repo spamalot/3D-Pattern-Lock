@@ -3,11 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class TouchTest3d : PinTechnique {
+public class TouchTest3d : TechniqueClientController {
 
-	/*public float leftOffset = 114;
+    /*public float leftOffset = 114;
 	public float topOffset = 332;
 	public float spacing = 127;*/
+
+    /*
+     * 0 1 2
+     * 3 4 5
+     * 6 7 8
+     */
+
+        /*
+
     public GameObject pointsPattern;
 
     public UnityEngine.UI.Extensions.UILineRenderer lr;
@@ -24,11 +33,6 @@ public class TouchTest3d : PinTechnique {
     private List<Thing> pts = new List<Thing>();
     private List<Vector2> linePts = new List<Vector2>();
 
-    /*
-     * 0 1 2
-     * 3 4 5
-     * 6 7 8
-     */
 
     int? NearestGridCell(Vector3 pos) {
 
@@ -58,17 +62,15 @@ public class TouchTest3d : PinTechnique {
         cursor.anchoredPosition = Util.PixelToCanvas(ppxy);
 
 
-        var gcx = NearestGridCell(localCoordThing.posn);// dragController.posn);
+        var gcx = NearestGridCell(localCoordThing.posn);
 
-        if (gcx == null)
-        {
+        if (gcx == null) {
             return;
         }
 
         var gc = (int)gcx;
 
-        if (!numsSoFar.Contains(gc))
-        {
+        if (!numsSoFar.Contains(gc)) {
             numsSoFar.Add(gc);
             var foo = Util.PixelToCanvas(pts[gc].pt);
             linePts.Add(foo);
@@ -86,30 +88,17 @@ public class TouchTest3d : PinTechnique {
 
     protected override void Start () {
         base.Start();
-        /*foreach (RectTransform child in pointsPattern.GetComponent<RectTransform>())
-        {
-            pts.Add(Util.CanvasToPixel(child.anchoredPosition));
-        }*/
-
-        /* float leftOffset = 50;
-          float topOffset = 438;
-          float spacing = 120;*/
-        // k*64
 
         float leftOffset = 50;
         float topOffset = 438;
         float spacing = 120;
 
 
-        for (int i = 0; i < 3; i++)
-        {
-            for (int j = 0; j < 3; j++)
-            {
-                for (int k = 0; k < 3; k++)
-                {
-                //var k = 0;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                for (int k = 0; k < 3; k++) {
                     pts.Add(
-                        new Thing{
+                        new Thing {
                             pt = new Vector2(leftOffset + spacing * j + k*40, topOffset + spacing * i - k*40),
                             actualPt = new Vector3(leftOffset + spacing * j, topOffset + spacing * i, 200+ k * spacing) });
                 }
@@ -117,14 +106,15 @@ public class TouchTest3d : PinTechnique {
         }
 
         Debug.Log(string.Join(",",pts.Select(x => x.ToString())));
-  foreach (var p in pts) {
+        foreach (var p in pts) {
             Debug.Log(p);
         }
 
 
-  // TODO TODO!!!! end pin after four numbers reached
+    // TODO TODO!!!! end pin after four numbers reached
 
     }
+    */
 	
 
 }

@@ -631,3 +631,7 @@ C:/Users/dzkaraka/Documents/GitHub/cs858/KeyPad/obj/Debug/Assembly-CSharp.dll
 C:/Users/dzkaraka/Documents/GitHub/cs858/KeyPad/obj/Debug/Assembly-CSharp.pdb
 /Users/yixinwang/cs858/KeyPad/Temp/bin/Debug/ViconPegasusSDK_CSharp.dll
 /Users/yixinwang/cs858/KeyPad/Temp/bin/Debug/Assembly-CSharp-firstpass.pdb
+C:\Users\mlakier\Desktop\deleteme\cs858\KeyPad\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
+C:\Users\mlakier\Desktop\deleteme\cs858\KeyPad\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
+C:\Users\mlakier\Desktop\deleteme\cs858\KeyPad\obj\Debug\Assembly-CSharp.dll
+C:\Users\mlakier\Desktop\deleteme\cs858\KeyPad\obj\Debug\Assembly-CSharp.pdb
