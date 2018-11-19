@@ -1,8 +1,14 @@
 using System;
 using UnityEngine;
+#if UNITY_STANDALONE_OSX
+#else
 using ViconPegasusSDK.DotNET;
+#endif
 
-public class MarkerManagerVicon2 : MonoBehaviour {
+public class MarkerManagerVicon2 : MonoBehaviour
+{
+
+
 
     // Vicon Motion 
     public string HostNameAndPort = "192.168.1.119:801";
@@ -10,9 +16,15 @@ public class MarkerManagerVicon2 : MonoBehaviour {
     public float y_adjustment = 0;
     public float z_adjustment = 0;
     public int numMarkers = 0;
+
+#if UNITY_STANDALONE_OSX
+#else
+
+
     private Client mViconClient = new Client();
     private Transform mOriginPoint;
     private Vector3 lastPosition;
+
 
     // Use this for initialization
     void Start () {
@@ -193,5 +205,5 @@ public class MarkerManagerVicon2 : MonoBehaviour {
         resultingObject.transform.Rotate(90f, 180f, 0f, Space.World);
         resultingObject.transform.Rotate(0f, 180f, 0f, Space.Self);
     }
-
+#endif
 }
