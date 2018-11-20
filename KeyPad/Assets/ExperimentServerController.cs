@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; 
 
 public class ExperimentServerController : ExperimentController {
 
@@ -17,6 +18,7 @@ public class ExperimentServerController : ExperimentController {
     public List<string> Pattern3DPins;
 
     public GameObject techniqueServerControllerObject;
+    public InputField inputPID;
 
 
     public void SetTechniquePIN() {
@@ -33,7 +35,10 @@ public class ExperimentServerController : ExperimentController {
 
     private void SetTechnique(Technique newTechnique) {
         OnTechniqueChanged?.Invoke(newTechnique);
+        LoggingClass.setLoggerUser(inputPID.text);
+        LoggingClass.setLoggerTechnique(newTechnique.ToString());
     }
+
 
     public void ApplyServerTechnique(Technique newTechnique) {
         technique = newTechnique;
