@@ -1,16 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PinServerController : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+public class PinServerController : TechniqueServerController
+{
+    public override void OnButtonPress(string text) {
+        enteredNumbers.Add(Int32.Parse(text));
+        if (enteredNumbers.Count == 4){
+            enteredNumbers.Clear();
+        }
+        InvokeOnEnteredNumbersChanged(enteredNumbers.ToArray());
+    }
 }

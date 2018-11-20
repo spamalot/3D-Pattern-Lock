@@ -6,6 +6,55 @@ using UnityEngine;
 
 public class UserInput : TechniqueClientController {
 
+    public GameObject buttonPrefab;
+    public Transform buttonContainer;
+    public Text txtInput;
+    public ButtonController buttonController;
+    List<Button> buttons = new List<Button>();
+
+    public Button CreateButton(Vector2 pos)
+    {
+        GameObject button = Instantiate(buttonPrefab);
+        button.transform.SetParent(buttonContainer);
+        button.GetComponent<RectTransform>().anchoredPosition = pos;
+        return button.GetComponent<Button>();
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        float startX = -24;
+        float startY = -316;
+        float spacingX = 132;
+        float spacingY = 92;
+
+        buttons.Add(CreateButton(new Vector2(startX + spacingX * 2, startY - spacingY * 4)));
+        for (int i = 0; i < 3; i++)
+        {
+            startY = startY - spacingY;
+            startX = -24;
+            for (int j = 0; j < 3; j++)
+            {
+                startX = startX + spacingX;
+                buttons.Add(CreateButton(new Vector2(startX, startY)));
+            }
+        }
+
+        for (int i = 0; i < 10; i++)
+        {
+            var x = i; // curry i (C# doesn't support this nicely any other way)
+            buttons[i].onClick.AddListener(() => buttonController.ButtonPressed(x.ToString()));
+        }
+    }
+
+    void Update(){
+        txtInput.text = "";
+        for (int i = 0; i < EnteredNumbers.Count; i++){
+            txtInput.text = txtInput.text + "*";
+        }
+    }
+
+
     /*
      
     public GameObject buttonPrefab;
@@ -106,5 +155,5 @@ public class UserInput : TechniqueClientController {
         return button.GetComponent<Button>();
     }
     */
-    
+
 }
