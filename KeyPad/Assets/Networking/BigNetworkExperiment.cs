@@ -10,28 +10,28 @@ public class BigNetworkExperiment : NetworkBehaviour {
 
     [Command]
     void CmdBeginDrag() {
-        Debug.Log("yay");
+        //Debug.Log("yay");
         serverController.OnBeginDrag();
         LoggingClass.appendToLog("DRAG BEGIN: ", "Drag begin!");
     }
 
     [Command]
     void CmdEndDrag() {
-        Debug.Log("bye bye");
+        //Debug.Log("bye bye");
         serverController.OnEndDrag();
         LoggingClass.appendToLog("DRAG END: ", "Drag end!");
     }
 
     [Command]
     void CmdOnDrag(Vector2 pos) {
-        Debug.Log("wee " + pos);
+        //Debug.Log("wee " + pos);
         serverController.OnDrag(pos);
         LoggingClass.appendToLog("DRAG: ", pos.ToString());
     }
 
     [Command]
     void CmdOnButtonPress(string text) {
-        Debug.Log("client pressed " + text);
+        //Debug.Log("client pressed " + text);
         serverController.OnButtonPress(text);
         LoggingClass.appendToLog("BUTTON PRESSED: ", text);
     }

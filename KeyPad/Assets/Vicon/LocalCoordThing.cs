@@ -33,6 +33,6 @@ public class LocalCoordThing : MonoBehaviour {
             distance = Distance.Inactive;
         }*/
         posn = new Vector3(xyz.x, xyz.y, xyz.z * pixelWidth * unitScale);
-       // Debug.Log(posn);// +" " + distance);
+
     }
 }

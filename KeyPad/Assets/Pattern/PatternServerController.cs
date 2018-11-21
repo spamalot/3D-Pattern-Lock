@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PatternServerController : TechniqueServerController {
 
@@ -40,10 +39,6 @@ public class PatternServerController : TechniqueServerController {
         }
 
         return null;
-    }
-
-    void Update() {
-        
     }
 
     /*

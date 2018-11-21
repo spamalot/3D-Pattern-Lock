@@ -45,7 +45,7 @@ public class ExperimentServerController : ExperimentController {
         switch (newTechnique) {
             case Technique.PIN: techniqueServerControllerObject.AddComponent<PinServerController>(); break;
             case Technique.Pattern: techniqueServerControllerObject.AddComponent<PatternServerController>(); break;
-            case Technique.Pattern3D: Debug.LogError("NotImplemented"); break;
+            case Technique.Pattern3D: techniqueServerControllerObject.AddComponent<Pattern3DServerController>(); break;
         }
     }
 

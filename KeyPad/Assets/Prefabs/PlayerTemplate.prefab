@@ -84,6 +84,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd81e9d52fa584d489e24e98ca38bab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deviceSpecializer: {fileID: 0}
-  dragController: {fileID: 0}
-  foo: 0
