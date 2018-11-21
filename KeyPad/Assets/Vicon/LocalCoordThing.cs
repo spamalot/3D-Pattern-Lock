@@ -10,11 +10,6 @@ public class LocalCoordThing : MonoBehaviour {
     public float middle = 0.5f;
     public float far = 1f;
 
-    //public enum Distance { Close, Middle, Far, Inactive };
-
-    //public Distance distance;
-    //public Vector2 posn;
-
     public Vector3 posn;
 
     void Update () {
@@ -22,16 +17,6 @@ public class LocalCoordThing : MonoBehaviour {
         var p = transform.localPosition;
 
         var xyz = new Vector3((p.x * unitScale + 0.5f) * pixelWidth, aspect* pixelWidth - (p.y * unitScale + 0.5f * aspect) * pixelWidth, -p.z);
-        //posn = new Vector2(xyz.x, xyz.y);
-        /*if (xyz.z >= 0 && xyz.z < close) {
-            distance = Distance.Close;
-        } else if (xyz.z >= close && xyz.z < middle) {
-            distance = Distance.Middle;
-        } else if (xyz.z >= middle && xyz.z < far) {
-            distance = Distance.Far;
-        } else {
-            distance = Distance.Inactive;
-        }*/
         posn = new Vector3(xyz.x, xyz.y, xyz.z * pixelWidth * unitScale);
 
     }

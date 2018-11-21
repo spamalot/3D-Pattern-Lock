@@ -12,6 +12,7 @@ public abstract class TechniqueClientController : MonoBehaviour {
 
     public List<int> EnteredNumbers { get; set; } = new List<int>();
     public Vector2 CursorPosition { get; set; }
+    public TechniqueServerController.Depth CursorDepth { get; set; }
 
     protected virtual void OnEnable() {
         backgroundObject.sprite = background;

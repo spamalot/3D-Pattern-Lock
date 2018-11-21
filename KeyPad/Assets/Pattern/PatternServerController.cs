@@ -7,6 +7,8 @@ public class PatternServerController : TechniqueServerController {
     }
 
     public override void OnDrag(Vector2 pos) {
+        InvokeOnCursorPositionChanged(Util.PixelToCanvas(pos));
+
         var cellOrNull = NearestGridCell(pos);
 
         if (cellOrNull == null) {
@@ -20,7 +22,6 @@ public class PatternServerController : TechniqueServerController {
         }
 
         InvokeOnEnteredNumbersChanged(enteredNumbers.ToArray());
-        InvokeOnCursorPositionchanged(Util.PixelToCanvas(pos));
     }
 
 
@@ -33,7 +34,7 @@ public class PatternServerController : TechniqueServerController {
     int? NearestGridCell(Vector2 pos) {
 
         for (int i = 0; i < 9; i++) {
-            if (Vector2.Distance(pos, PatternSharedData.Points[i]) < 50) {
+            if (Vector2.Distance(pos, PatternSharedData.Points[i]) < PatternSharedData.spacing * 0.4f) {
                 return i;
             }
         }

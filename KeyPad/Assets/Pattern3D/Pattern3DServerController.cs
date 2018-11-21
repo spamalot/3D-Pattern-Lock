@@ -13,18 +13,20 @@ public class Pattern3DServerController : TechniqueServerController {
 
     int? NearestGridCell3D(Vector3 pos) {
 
+        // Split up x and y dims;
+        // have z dims precisely on border, because selection should only
+        // depend on xy.
         for (int i = 0; i < 27; i++) {
-            if (Vector3.Distance(pos, Pattern3DSharedData.Points3D[i].actualPt) < 50) {
+            var posxy = new Vector2(pos.x, pos.y);
+            var actualPt = Pattern3DSharedData.Points3D[i].actualPt;
+            var actualPtxy = new Vector2(actualPt.x, actualPt.y);
+            if (Vector2.Distance(posxy, actualPt) < Pattern3DSharedData.spacing * 0.4f
+                && Mathf.Abs(pos.z - actualPt.z) < Pattern3DSharedData.spacingZ * 0.499f) {
                 return i;
             }
         }
 
         return null;
-    }
-
-    // FIXME: get rid of this when localCoordThingFixed
-    void Start() {
-        localCoordThing = GameObject.Find("ThumbTest").GetComponent<LocalCoordThing>();
     }
 
     void Update() {
@@ -34,13 +36,27 @@ public class Pattern3DServerController : TechniqueServerController {
         //
         var viconPos3D = localCoordThing.posn;
         var viconPos2D = new Vector2(viconPos3D.x, viconPos3D.y);
-        var depthOffsetScalar = (viconPos3D.z - Pattern3DSharedData.minScreenZ) / Pattern3DSharedData.spacing;
+        var depthOffsetScalar = (viconPos3D.z - Pattern3DSharedData.minScreenZ) / Pattern3DSharedData.spacingZ;
         var depthOffsetVector = depthOffsetScalar * Pattern3DSharedData.spacingProjDepth * new Vector2(1, -1);
         var viconPosProj = viconPos2D + depthOffsetVector;
 
         // FIXME TODO need new event for cursor size/color
         //textThing.text = pk.ToString();
 
+        InvokeOnCursorPositionChanged(Util.PixelToCanvas(viconPosProj));
+
+        // 0.5 offset to account for fact that depth offset marks
+        // *boundary* of depths.
+        var depthOffsetRounded = (int)(depthOffsetScalar + 0.5f);
+        Depth depth;
+        switch(depthOffsetRounded) {
+            case 0: depth = Depth.Close; break;
+            case 1: depth = Depth.Middle; break;
+            case 2: depth = Depth.Far; break;
+            default: depth = Depth.Inactive; break;
+        }
+
+        InvokeOnCursorDepthChanged(depth);
 
         //
         // Calculate pin
@@ -58,11 +74,8 @@ public class Pattern3DServerController : TechniqueServerController {
 
         }
 
-        //
-        // Send to client
-        //
         InvokeOnEnteredNumbersChanged(enteredNumbers.ToArray());
-        InvokeOnCursorPositionchanged(Util.PixelToCanvas(viconPosProj));
+        
     }
 
 

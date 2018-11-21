@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class TechniqueServerController : MonoBehaviour {
 
+    public enum Depth { Inactive, Close, Middle, Far };
+
     public virtual void OnBeginDrag() { }
     public virtual void OnEndDrag() { }
     public virtual void OnDrag(Vector2 pos) { }
@@ -13,13 +15,18 @@ public abstract class TechniqueServerController : MonoBehaviour {
 
     public event Action<int[]> OnEnteredNumbersChanged;
     public event Action<Vector2> OnCursorPositionChanged;
+    public event Action<Depth> OnCursorDepthChanged;
 
     protected void InvokeOnEnteredNumbersChanged(int[] numbers) {
         OnEnteredNumbersChanged?.Invoke(numbers);
     }
 
-    protected void InvokeOnCursorPositionchanged(Vector2 position) {
+    protected void InvokeOnCursorPositionChanged(Vector2 position) {
         OnCursorPositionChanged?.Invoke(position);
+    }
+
+    protected void InvokeOnCursorDepthChanged(Depth depth) {
+        OnCursorDepthChanged?.Invoke(depth);
     }
 
 }

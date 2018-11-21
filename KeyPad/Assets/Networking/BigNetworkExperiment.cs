@@ -83,6 +83,17 @@ public class BigNetworkExperiment : NetworkBehaviour {
         clientController.CursorPosition = position;
     }
 
+
+    void XCursorDepthChanged(TechniqueServerController.Depth depth) {
+        RpcCursorDepthChanged(depth);
+    }
+
+    [ClientRpc]
+    void RpcCursorDepthChanged(TechniqueServerController.Depth depth) {
+        clientController.CursorDepth = depth;
+    }
+
+
     [ClientRpc]
     void RpcSendMobile() {
         data.deviceSpecializer.MobileClick();
@@ -108,9 +119,10 @@ public class BigNetworkExperiment : NetworkBehaviour {
         if (isLocalPlayer) {
             clientController = GameObject.Find("TechniqueClientPointer").GetComponent<TechniqueClientPointer>().Controller;
         } else {
-            serverController = GameObject.Find("TechniqueServerController").GetComponent<TechniqueServerController>();
+            serverController = GameObject.Find("TechniqueServerPointer").GetComponent<TechniqueServerPointer>().Controller;
             serverController.OnEnteredNumbersChanged += XEnteredNumbersChanged;
             serverController.OnCursorPositionChanged += XCursorPositionChanged;
+            serverController.OnCursorDepthChanged += XCursorDepthChanged;
         }
     }
 
