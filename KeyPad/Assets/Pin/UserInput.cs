@@ -20,9 +20,8 @@ public class UserInput : TechniqueClientController {
         return button.GetComponent<Button>();
     }
 
-    protected override void Start()
+    void Start()
     {
-        base.Start();
         float startX = -24;
         float startY = -316;
         float spacingX = 132;

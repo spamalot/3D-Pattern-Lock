@@ -10,11 +10,10 @@ public abstract class TechniqueClientController : MonoBehaviour {
 
     public Sprite background;
 
-
     public List<int> EnteredNumbers { get; set; } = new List<int>();
     public Vector2 CursorPosition { get; set; }
 
-    protected virtual void Start() {
+    protected virtual void OnEnable() {
         backgroundObject.sprite = background;
     }
 
