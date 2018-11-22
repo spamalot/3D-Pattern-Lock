@@ -33,6 +33,8 @@ public class BigNetworkExperiment : NetworkBehaviour {
     void CmdOnButtonPress(string text) {
         //Debug.Log("client pressed " + text);
         serverController.OnButtonPress(text);
+        data.experimentServerController.digitEntered(text);
+        //Debug.Log("BUTTON PRESSED: " + text);
         LoggingClass.appendToLog("BUTTON PRESSED: ", text);
     }
 
