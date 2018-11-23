@@ -9,7 +9,6 @@ public class UserInput : TechniqueClientController {
     public GameObject buttonPrefab;
     public Transform buttonContainer;
     public Text txtInput;
-    public ButtonController buttonController;
     List<Button> buttons = new List<Button>();
 
     public Button CreateButton(Vector2 pos)
@@ -20,8 +19,9 @@ public class UserInput : TechniqueClientController {
         return button.GetComponent<Button>();
     }
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         float startX = -24;
         float startY = -316;
         float spacingX = 132;

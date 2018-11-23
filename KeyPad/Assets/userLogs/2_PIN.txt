@@ -1,0 +1,6 @@
+2018-11-23 5:23:55 PM, 2, PIN, 0, 0, CLIENT START, 1,2,3,4, [PlayerTemplateData (PlayerTemplateData), ExperimentController (ExperimentServerController)]
+2018-11-23 5:23:56 PM, 2, PIN, 0, 0, BUTTON PRESSED: , 1,2,3,4, 2
+2018-11-23 5:23:57 PM, 2, PIN, 0, 0, BUTTON PRESSED: , 1,2,3,4, 1
+2018-11-23 5:23:57 PM, 2, PIN, 0, 0, BUTTON PRESSED: , 1,2,3,4, 4
+2018-11-23 5:23:57 PM, 2, PIN, 0, 0, Pin entry finished, 1,2,3,4, fail
+2018-11-23 5:23:57 PM, 2, PIN, 0, 1, BUTTON PRESSED: , 1,2,3,4, 5

@@ -10,31 +10,36 @@ public class BigNetworkExperiment : NetworkBehaviour {
 
     [Command]
     void CmdBeginDrag() {
-        //Debug.Log("yay");
         serverController.OnBeginDrag();
         LoggingClass.appendToLog("DRAG BEGIN: ", "Drag begin!");
     }
 
     [Command]
     void CmdEndDrag() {
-        //Debug.Log("bye bye");
         serverController.OnEndDrag();
         LoggingClass.appendToLog("DRAG END: ", "Drag end!");
     }
 
     [Command]
     void CmdOnDrag(Vector2 pos) {
-        //Debug.Log("wee " + pos);
         serverController.OnDrag(pos);
         LoggingClass.appendToLog("DRAG: ", pos.ToString());
     }
 
     [Command]
     void CmdOnButtonPress(string text) {
-        //Debug.Log("client pressed " + text);
+        if (text == ExperimentServerController.START) {
+            LoggingClass.appendToLog("CLIENT START", "["+data+", "+data.experimentServerController+"]");
+            data.experimentServerController.ClientStart();
+            return;
+        }
+        if (text == ExperimentServerController.CONTINUE) {
+            LoggingClass.appendToLog("CLIENT CONTINUE", "");
+            data.experimentServerController.ClientContinue();
+            return;
+        }
         serverController.OnButtonPress(text);
         data.experimentServerController.digitEntered(text);
-        //Debug.Log("BUTTON PRESSED: " + text);
         LoggingClass.appendToLog("BUTTON PRESSED: ", text);
     }
 
@@ -117,6 +122,25 @@ public class BigNetworkExperiment : NetworkBehaviour {
         RpcSetTechnique(technique);
     }
 
+    [Command]
+    void CmdSetClientReady() {
+        data.experimentServerController.ClientReady();
+    }
+
+    void XSetClientReady() {
+        CmdSetClientReady();
+    }
+
+
+    [ClientRpc]
+    void RpcSetClientMode(TechniqueClientController.ModeType modeType) {
+        data.experimentClientController.techniqueClientPointer.Controller.ChangeMode(modeType);
+    } 
+
+    void XSetClientMode(TechniqueClientController.ModeType modeType) {
+        RpcSetClientMode(modeType);
+    }
+
     void PrepControllers() {
         if (isLocalPlayer) {
             clientController = GameObject.Find("TechniqueClientPointer").GetComponent<TechniqueClientPointer>().Controller;
@@ -135,6 +159,8 @@ public class BigNetworkExperiment : NetworkBehaviour {
         data.dragController.OnDragged += XOnDrag;
         data.buttonController.OnButtonPress += XOnButtonPress;
         data.experimentServerController.OnTechniqueChanged += XSetTechnique;
+        data.experimentServerController.OnClientModeChanged += XSetClientMode;
+        data.experimentClientController.OnClientReady += XSetClientReady;
     }
 
 

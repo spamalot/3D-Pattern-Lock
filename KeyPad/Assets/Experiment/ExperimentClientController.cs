@@ -1,9 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 public class ExperimentClientController : ExperimentController {
 
+    public event Action OnClientReady;
 
     public TechniqueClientController PINPinTechnique;
     public TechniqueClientController PatternPinTechnique;
@@ -25,6 +25,7 @@ public class ExperimentClientController : ExperimentController {
         }
         controller.gameObject.SetActive(true);
         techniqueClientPointer.Controller = controller;
+        OnClientReady?.Invoke();
     }
 
 }

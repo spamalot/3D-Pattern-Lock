@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class ExperimentServerController : ExperimentController {
 
+    public const string START = "Start";
+    public const string CONTINUE = "Continue";
+
     public TechniqueServerController PINPinTechnique;
     public TechniqueServerController PatternPinTechnique;
     public TechniqueServerController Pattern3DPinTechnique;
@@ -12,6 +15,7 @@ public class ExperimentServerController : ExperimentController {
     public TechniqueServerPointer techniqueServerPointer;
 
     public event Action<Technique> OnTechniqueChanged;
+    public event Action<TechniqueClientController.ModeType> OnClientModeChanged;
 
     public int participantId;
 
@@ -28,7 +32,7 @@ public class ExperimentServerController : ExperimentController {
     private int currentTrailForPin = 0;//how many times the user has tried to enter the pin.
     private int digitEnteredSoFar = 0;
     private string currentlyEnteredStatePin = "";
-    private int allowedNumTrails = 5;
+    private int allowedNumTrails = 8;
 
     public GameObject techniqueServerControllerObject;
     public InputField inputPID;
@@ -53,21 +57,30 @@ public class ExperimentServerController : ExperimentController {
     }
 
 
-    public void ApplyServerTechnique(Technique newTechnique) {
+    public void ApplyServerTechnique(Technique newTechnique)
+    {
         technique = newTechnique;
 
-        foreach (var x in new TechniqueServerController[] { PINPinTechnique, PatternPinTechnique, Pattern3DPinTechnique }) {
+        foreach (var x in new TechniqueServerController[] { PINPinTechnique, PatternPinTechnique, Pattern3DPinTechnique })
+        {
             x.gameObject.SetActive(false);
         }
         TechniqueServerController controller;
-        switch (technique) {
-            case Technique.PIN: controller = PINPinTechnique; SetCurrentPin(currentPinTested); SetCurrentPinTrail(currentTrailForPin); break;
-            case Technique.Pattern: controller = PatternPinTechnique; SetCurrentPin(currentPinTested); SetCurrentPinTrail(currentTrailForPin); break;
-            case Technique.Pattern3D: controller = Pattern3DPinTechnique; SetCurrentPin(currentPinTested); SetCurrentPinTrail(currentTrailForPin); break;
+        switch (technique)
+        {
+            case Technique.PIN: controller = PINPinTechnique; break;
+            case Technique.Pattern: controller = PatternPinTechnique; break;
+            case Technique.Pattern3D: controller = Pattern3DPinTechnique; break;
             default: throw new System.InvalidOperationException();
         }
+        SetCurrentPin(currentPinTested);
+        SetCurrentPinTrail(currentTrailForPin);
         controller.gameObject.SetActive(true);
         techniqueServerPointer.Controller = controller;
+    }
+
+    public void ClientReady() {
+       OnClientModeChanged?.Invoke(TechniqueClientController.ModeType.Start);
     }
 
     public void digitEntered(string enteredDigit)
@@ -79,10 +92,12 @@ public class ExperimentServerController : ExperimentController {
         {
             if(currentlyEnteredStatePin.Equals(PINPins[currentPinTested]))
             {
+                OnClientModeChanged?.Invoke(TechniqueClientController.ModeType.ContinueCorrect);
                 LoggingClass.appendToLog("Pin entry finished", "success");
             }
             else
             {
+                OnClientModeChanged?.Invoke(TechniqueClientController.ModeType.ContinueIncorrect);
                 LoggingClass.appendToLog("Pin entry finished", "fail");
             }
 
@@ -105,7 +120,20 @@ public class ExperimentServerController : ExperimentController {
                 SetCurrentPin(currentPinTested);
                 currentTrailForPin = 0;
             }
+
+
+
         }
+    }
+
+    public void ClientStart() {
+        // fill in: sets client mode to entering
+        OnClientModeChanged?.Invoke(TechniqueClientController.ModeType.Entering);
+    }
+
+    public void ClientContinue() {
+        // fill in: sets client mode to entering
+        OnClientModeChanged?.Invoke(TechniqueClientController.ModeType.Entering);
     }
 
     private void SetCurrentPin(int passedCurrentPinTested)
