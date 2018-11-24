@@ -49,7 +49,7 @@ public abstract class TechniqueClientController : MonoBehaviour {
                    || modeType == ModeType.ContinueIncorrect) {
             // show continue button
             continueButton.gameObject.SetActive(true);
-            correctPinText.gameObject.SetActive(false);
+            correctPinText.gameObject.SetActive(true);
             switch (modeType) {
                 case ModeType.ContinueNoFeedback: correctPinText.text = ""; break;
                 case ModeType.ContinueCorrect: correctPinText.text = "Correct PIN"; break;

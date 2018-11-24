@@ -51,7 +51,9 @@ public static class LoggingClass
 
     public static void appendToLog(string eventLogged,string dataToWrite)
     {
-        string path = "Assets/userLogs/" + userId + "_" + technique + ".txt";
+        Debug.Log(Application.dataPath);
+        
+        string path = Application.persistentDataPath + "/userLogs/" + userId + "_" + technique + ".txt";
         StreamWriter writer = new StreamWriter(path, true);
         writer.WriteLine(System.DateTime.Now + ", " + userId + ", " + technique + ", " + pinTestedNumber + ", " + pinTrailNumber + ", " + eventLogged + ", " + actualPin + ", " + dataToWrite);
         writer.Close();

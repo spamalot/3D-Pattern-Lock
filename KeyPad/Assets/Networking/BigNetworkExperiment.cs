@@ -29,7 +29,7 @@ public class BigNetworkExperiment : NetworkBehaviour {
     [Command]
     void CmdOnButtonPress(string text) {
         if (text == ExperimentServerController.START) {
-            LoggingClass.appendToLog("CLIENT START", "["+data+", "+data.experimentServerController+"]");
+            LoggingClass.appendToLog("CLIENT START", "");
             data.experimentServerController.ClientStart();
             return;
         }
