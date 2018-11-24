@@ -18,4 +18,8 @@ public class TouchTest : TechniqueClientController {
         cursor.anchoredPosition = CursorPosition;
     }
 
+    public override void ChangeFeedbackEnabled(bool enabled_) {
+        lr.enabled = enabled_;
+    }
+
 }

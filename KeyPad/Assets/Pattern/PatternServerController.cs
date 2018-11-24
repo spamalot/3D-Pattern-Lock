@@ -3,7 +3,7 @@
 public class PatternServerController : TechniqueServerController {
 
     public override void OnBeginDrag() {
-        enteredNumbers.Clear();
+        EnteredNumbers.Clear();
     }
 
     public override void OnDrag(Vector2 pos) {
@@ -17,11 +17,11 @@ public class PatternServerController : TechniqueServerController {
 
         var cell = (int)cellOrNull;
 
-        if (!enteredNumbers.Contains(cell)) {
-            enteredNumbers.Add(cell);
+        if (!EnteredNumbers.Contains(cell)) {
+            EnteredNumbers.Add(cell);
         }
 
-        InvokeOnEnteredNumbersChanged(enteredNumbers.ToArray());
+        InvokeOnEnteredNumbersChanged();
     }
 
 

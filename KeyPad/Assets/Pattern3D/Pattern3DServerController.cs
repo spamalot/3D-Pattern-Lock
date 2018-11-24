@@ -7,9 +7,8 @@ public class Pattern3DServerController : TechniqueServerController {
 
     // FIXME TODO eventually auto clear on finish rather than this
     public override void OnBeginDrag() {
-        enteredNumbers.Clear();
+        EnteredNumbers.Clear();
     }
-
 
     int? NearestGridCell3D(Vector3 pos) {
 
@@ -30,6 +29,11 @@ public class Pattern3DServerController : TechniqueServerController {
     }
 
     void Update() {
+
+        if (!Enabled) {
+            return;
+        }
+
 
         //
         // Calculate cursor position
@@ -69,12 +73,12 @@ public class Pattern3DServerController : TechniqueServerController {
 
         var gc = (int)cellOrNull;
 
-        if (!enteredNumbers.Contains(gc)) {
-            enteredNumbers.Add(gc);
+        if (!EnteredNumbers.Contains(gc)) {
+            EnteredNumbers.Add(gc);
 
         }
 
-        InvokeOnEnteredNumbersChanged(enteredNumbers.ToArray());
+        InvokeOnEnteredNumbersChanged();
         
     }
 

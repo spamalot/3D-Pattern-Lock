@@ -6,36 +6,11 @@ using UnityEngine;
 public static class LoggingClass
 {
 
-    public static string userId;
-    public static string technique;
-    public static string pinTestedNumber;
-    public static string pinTrailNumber;
-    public static string actualPin;
-
-    public static void setLoggerUser(string user)
-    {
-        userId = user;
-    }
-
-    public static void setLoggerTechnique(string techniqueStarted)
-    {
-        technique = techniqueStarted;
-    }
-
-    public static void setLoggerPinTestedNumber (string pinNumber)
-    {
-        pinTestedNumber = pinNumber;
-    }
-
-    public static void setLoggerPinTrailNumber (string pinTrailNum)
-    {
-        pinTrailNumber = pinTrailNum;
-    }
-
-    public static void setLoggerActualPin (string actualPinNumber)
-    {
-        actualPin = actualPinNumber;
-    }
+    public static string UserID { get; set; }
+    public static string Technique { get; set; }
+    public static string ExperimentPinNumber { get; set; }
+    public static string TrialNumber { get; set; }
+    public static string ActualPin { get; set; }
 
     /*Event logged can be any of these:
      * Event types:
@@ -49,13 +24,13 @@ public static class LoggingClass
      * - button press
      * */
 
-    public static void appendToLog(string eventLogged,string dataToWrite)
+    public static void AppendToLog(string eventLogged, string dataToWrite)
     {
         Debug.Log(Application.dataPath);
         
-        string path = Application.persistentDataPath + "/userLogs/" + userId + "_" + technique + ".txt";
+        string path = Application.persistentDataPath + "/userLogs/" + UserID + "_" + Technique + ".txt";
         StreamWriter writer = new StreamWriter(path, true);
-        writer.WriteLine(System.DateTime.Now + ", " + userId + ", " + technique + ", " + pinTestedNumber + ", " + pinTrailNumber + ", " + eventLogged + ", " + actualPin + ", " + dataToWrite);
+        writer.WriteLine(System.DateTime.Now + ", " + UserID + ", " + Technique + ", " + ExperimentPinNumber + ", " + TrialNumber + ", " + eventLogged + ", " + ActualPin + ", " + dataToWrite);
         writer.Close();
 
     }

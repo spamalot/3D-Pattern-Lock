@@ -35,12 +35,8 @@ public class TouchTest3d : TechniqueClientController {
     }
 
 
-   /* void OnEnd()
-    {
-        Commit();
-    }*/
-
-
-    // TODO TODO!!!! end pin after four numbers reached
+    public override void ChangeFeedbackEnabled(bool enabled_) {
+        lr.enabled = enabled_;
+    }
 
 }

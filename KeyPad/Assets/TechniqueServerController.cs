@@ -11,14 +11,20 @@ public abstract class TechniqueServerController : MonoBehaviour {
     public virtual void OnDrag(Vector2 pos) { }
     public virtual void OnButtonPress(string text) { }
 
-    public List<int> enteredNumbers = new List<int>();
+    public bool Enabled { get; set; } = true;
+    public List<int> EnteredNumbers { get; protected set; } = new List<int>();
+    public int EnteredNumberCount { get { return EnteredNumbers.Count; } }
 
     public event Action<int[]> OnEnteredNumbersChanged;
     public event Action<Vector2> OnCursorPositionChanged;
     public event Action<Depth> OnCursorDepthChanged;
 
-    protected void InvokeOnEnteredNumbersChanged(int[] numbers) {
-        OnEnteredNumbersChanged?.Invoke(numbers);
+    public void ResetEnteredNumbers() {
+        EnteredNumbers.Clear();
+    }
+
+    protected void InvokeOnEnteredNumbersChanged() {
+        OnEnteredNumbersChanged?.Invoke(EnteredNumbers.ToArray());
     }
 
     protected void InvokeOnCursorPositionChanged(Vector2 position) {

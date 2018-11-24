@@ -11,36 +11,38 @@ public class BigNetworkExperiment : NetworkBehaviour {
     [Command]
     void CmdBeginDrag() {
         serverController.OnBeginDrag();
-        LoggingClass.appendToLog("DRAG BEGIN: ", "Drag begin!");
+        LoggingClass.AppendToLog("DRAG BEGIN: ", "Drag begin!");
     }
 
     [Command]
     void CmdEndDrag() {
         serverController.OnEndDrag();
-        LoggingClass.appendToLog("DRAG END: ", "Drag end!");
+        LoggingClass.AppendToLog("DRAG END: ", "Drag end!");
     }
 
     [Command]
     void CmdOnDrag(Vector2 pos) {
         serverController.OnDrag(pos);
-        LoggingClass.appendToLog("DRAG: ", pos.ToString());
+        LoggingClass.AppendToLog("DRAG: ", pos.ToString());
     }
 
     [Command]
     void CmdOnButtonPress(string text) {
         if (text == ExperimentServerController.START) {
-            LoggingClass.appendToLog("CLIENT START", "");
+            LoggingClass.AppendToLog("CLIENT START", "");
             data.experimentServerController.ClientStart();
             return;
         }
         if (text == ExperimentServerController.CONTINUE) {
-            LoggingClass.appendToLog("CLIENT CONTINUE", "");
+            LoggingClass.AppendToLog("CLIENT CONTINUE", "");
             data.experimentServerController.ClientContinue();
             return;
         }
         serverController.OnButtonPress(text);
-        data.experimentServerController.digitEntered(text);
-        LoggingClass.appendToLog("BUTTON PRESSED: ", text);
+        // TODO: remove commented line once experiment server controller knows
+        // when EnteredNumbers changes
+        //data.experimentServerController.DigitEntered(text);
+        LoggingClass.AppendToLog("BUTTON PRESSED: ", text);
     }
 
     void XBeginDrag() {
@@ -141,6 +143,16 @@ public class BigNetworkExperiment : NetworkBehaviour {
         RpcSetClientMode(modeType);
     }
 
+
+    [ClientRpc]
+    void RpcSetClientFeedbackEnabled(bool enabled_) {
+        data.experimentClientController.techniqueClientPointer.Controller.ChangeFeedbackEnabled(enabled_);
+    }
+
+    void XSetClientFeedbackEnabled(bool enabled_) {
+        RpcSetClientFeedbackEnabled(enabled_);
+    }
+
     void PrepControllers() {
         if (isLocalPlayer) {
             clientController = GameObject.Find("TechniqueClientPointer").GetComponent<TechniqueClientPointer>().Controller;
@@ -160,6 +172,7 @@ public class BigNetworkExperiment : NetworkBehaviour {
         data.buttonController.OnButtonPress += XOnButtonPress;
         data.experimentServerController.OnTechniqueChanged += XSetTechnique;
         data.experimentServerController.OnClientModeChanged += XSetClientMode;
+        data.experimentServerController.OnClientFeedbackEnabledChanged += XSetClientFeedbackEnabled;
         data.experimentClientController.OnClientReady += XSetClientReady;
     }
 

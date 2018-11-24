@@ -60,5 +60,6 @@ public abstract class TechniqueClientController : MonoBehaviour {
         }
     }
 
+    public abstract void ChangeFeedbackEnabled(bool enabled_);
 
 }

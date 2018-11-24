@@ -54,6 +54,11 @@ public class UserInput : TechniqueClientController {
     }
 
 
+
+    public override void ChangeFeedbackEnabled(bool enabled_) {
+        // do nothing
+    }
+
     /*
      
     public GameObject buttonPrefab;
