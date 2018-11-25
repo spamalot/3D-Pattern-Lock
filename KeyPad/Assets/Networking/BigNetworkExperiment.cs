@@ -153,6 +153,18 @@ public class BigNetworkExperiment : NetworkBehaviour {
         RpcSetClientFeedbackEnabled(enabled_);
     }
 
+
+    [ClientRpc]
+    void RpcSetClientRoundNotification(TechniqueClientController.NotificationType notification)
+    {
+        data.experimentClientController.techniqueClientPointer.Controller.UpdateNotificationText(notification);
+    }
+
+    void XSetClientRoundNotification(TechniqueClientController.NotificationType notification)
+    {
+        RpcSetClientRoundNotification(notification);
+    }
+
     void PrepControllers() {
         if (isLocalPlayer) {
             clientController = GameObject.Find("TechniqueClientPointer").GetComponent<TechniqueClientPointer>().Controller;
@@ -174,6 +186,7 @@ public class BigNetworkExperiment : NetworkBehaviour {
         data.experimentServerController.OnClientModeChanged += XSetClientMode;
         data.experimentServerController.OnClientFeedbackEnabledChanged += XSetClientFeedbackEnabled;
         data.experimentClientController.OnClientReady += XSetClientReady;
+        data.experimentServerController.OnClientRoundNotification += XSetClientRoundNotification;
     }
 
 

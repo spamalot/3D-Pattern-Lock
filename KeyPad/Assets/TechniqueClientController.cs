@@ -18,9 +18,13 @@ public abstract class TechniqueClientController : MonoBehaviour {
     public Button startButton;
     public Button continueButton;
     public Text correctPinText;
+    public Text noticationText;
 
     public enum ModeType { Start, Entering, ContinueNoFeedback, ContinueCorrect, ContinueIncorrect };
     public ModeType Mode { get; set; }
+
+    public enum NotificationType { Round1, Round2, Finished };
+    public NotificationType notification { get; set; }
 
     public ButtonController buttonController;
 
@@ -58,6 +62,10 @@ public abstract class TechniqueClientController : MonoBehaviour {
         } else {
             Debug.Assert(false);
         }
+    }
+
+    public void UpdateNotificationText(NotificationType notification){
+        noticationText.text = notification.ToString();
     }
 
     public abstract void ChangeFeedbackEnabled(bool enabled_);

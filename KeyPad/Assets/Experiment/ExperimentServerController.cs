@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class ExperimentServerController : ExperimentController {
@@ -16,6 +17,7 @@ public class ExperimentServerController : ExperimentController {
     public event Action<Technique> OnTechniqueChanged;
     public event Action<TechniqueClientController.ModeType> OnClientModeChanged;
     public event Action<bool> OnClientFeedbackEnabledChanged;
+    public event Action<TechniqueClientController.NotificationType> OnClientRoundNotification;
 
     private int participantId;
 
@@ -115,6 +117,7 @@ public class ExperimentServerController : ExperimentController {
 
     public void ClientReady() {
        ChangeClientMode(TechniqueClientController.ModeType.Start);
+        OnClientRoundNotification?.Invoke(TechniqueClientController.NotificationType.Round1);
         OnClientFeedbackEnabledChanged?.Invoke(true);
     }
 
@@ -142,15 +145,8 @@ public class ExperimentServerController : ExperimentController {
 
             _controller.ResetEnteredNumbers();
 
-            currentTrialForPin++;
+            currentTrialForPin+=1;
             SetCurrentPinTrial(currentTrialForPin);
-
-            //Check if we want this to be the last trial for the technique
-            if (currentPinTested == (PINS_PER_PARTICIPANT - 1) && currentTrialForPin == 8) {
-                // TODO: make sure this is called when pin changes
-                OnClientFeedbackEnabledChanged?.Invoke(true);
-                return;
-            }
 
             if(currentTrialForPin >= PRACTICE_TRIALS){
                 OnClientFeedbackEnabledChanged?.Invoke(false);
@@ -160,11 +156,29 @@ public class ExperimentServerController : ExperimentController {
             // OnClientFeedbackEnabledChanged?.Invoke(false);
 
             if (currentTrialForPin == TOTAL_TRIALS) { //changing the current pin tested.
-                currentPinTested++;
+                currentPinTested+=1;
                 SetCurrentPin(currentPinTested);
                 currentTrialForPin = 0;
+                if (currentPinTested == (PINS_PER_PARTICIPANT - 1)){
+                    OnClientFeedbackEnabledChanged?.Invoke(true);
+                    OnClientRoundNotification?.Invoke(TechniqueClientController.NotificationType.Round2);
+                }
+                if (currentPinTested == 2)
+                {
+                    OnClientRoundNotification?.Invoke(TechniqueClientController.NotificationType.Finished);
+                }
             }
 
+            /*
+            //Check if we want this to be the last trial for the technique
+            if (currentPinTested == (PINS_PER_PARTICIPANT - 1) && currentTrialForPin == 8)
+            {
+                // TODO: make sure this is called when pin changes
+                OnClientFeedbackEnabledChanged?.Invoke(true);
+                OnClientRoundNotification?.Invoke(TechniqueClientController.NotificationType.Round2);
+                return;
+            }
+            */
         }
     }
 
