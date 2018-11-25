@@ -124,10 +124,16 @@ public class ExperimentServerController : ExperimentController {
 
             // TODO only in the case that feedback is enabled do we show correct or incorrect
             if (string.Join(",", _controller.EnteredNumbers) == CurrentCorrectPinString) {
-                ChangeClientMode(TechniqueClientController.ModeType.ContinueCorrect);
+                if(currentTrialForPin >= PRACTICE_TRIALS)
+                    ChangeClientMode(TechniqueClientController.ModeType.ContinueNoFeedback);
+                else
+                    ChangeClientMode(TechniqueClientController.ModeType.ContinueCorrect);
                 LoggingClass.AppendToLog("Pin entry finished", "success");
             } else {
-                ChangeClientMode(TechniqueClientController.ModeType.ContinueIncorrect);
+                if (currentTrialForPin >= PRACTICE_TRIALS)
+                    ChangeClientMode(TechniqueClientController.ModeType.ContinueNoFeedback);
+                else
+                    ChangeClientMode(TechniqueClientController.ModeType.ContinueIncorrect);
                 LoggingClass.AppendToLog("Pin entry finished", "fail");
             }
 
@@ -144,6 +150,10 @@ public class ExperimentServerController : ExperimentController {
                 // TODO: make sure this is called when pin changes
                 OnClientFeedbackEnabledChanged?.Invoke(true);
                 return;
+            }
+
+            if(currentTrialForPin >= PRACTICE_TRIALS){
+                OnClientFeedbackEnabledChanged?.Invoke(false);
             }
 
             // TODO when past trial rounds do this:
