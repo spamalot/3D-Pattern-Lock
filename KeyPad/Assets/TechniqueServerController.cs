@@ -24,6 +24,7 @@ public abstract class TechniqueServerController : MonoBehaviour {
     }
 
     protected void InvokeOnEnteredNumbersChanged() {
+
         OnEnteredNumbersChanged?.Invoke(EnteredNumbers.ToArray());
     }
 

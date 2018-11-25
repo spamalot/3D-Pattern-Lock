@@ -51,7 +51,7 @@ public class ExperimentServerController : ExperimentController {
                 case Technique.Pattern3D: relevantList = Pattern3DPins; break;
                 default: throw new InvalidOperationException();
             }
-            return relevantList[participantId * PINS_PER_PARTICIPANT + currentPinTested];
+            return relevantList[(participantId % 1000) * PINS_PER_PARTICIPANT + currentPinTested];
         }
     }
 
@@ -117,27 +117,32 @@ public class ExperimentServerController : ExperimentController {
 
     public void ClientReady() {
        ChangeClientMode(TechniqueClientController.ModeType.Start);
-        OnClientRoundNotification?.Invoke(TechniqueClientController.NotificationType.Round1);
+        OnClientRoundNotification?.Invoke(TechniqueClientController.NotificationType.Round1Practice);
         OnClientFeedbackEnabledChanged?.Invoke(true);
     }
 
     private void DigitEntered()
     {
+        var enteredPinString = string.Join(",", _controller.EnteredNumbers);
+        SetLoggerCurrentEnteredPin(enteredPinString);
+        LoggingClass.AppendToLog(LoggingClass.ENTERED_PIN_CHANGE, null, null, null, null, null);
         if (_controller.EnteredNumberCount == 4) {
 
             // TODO only in the case that feedback is enabled do we show correct or incorrect
-            if (string.Join(",", _controller.EnteredNumbers) == CurrentCorrectPinString) {
-                if(currentTrialForPin >= PRACTICE_TRIALS)
+            if (enteredPinString == CurrentCorrectPinString) {
+                if (currentTrialForPin >= PRACTICE_TRIALS) {
                     ChangeClientMode(TechniqueClientController.ModeType.ContinueNoFeedback);
-                else
+                } else {
                     ChangeClientMode(TechniqueClientController.ModeType.ContinueCorrect);
-                LoggingClass.AppendToLog("Pin entry finished", "success");
+                }
+                LoggingClass.AppendToLog(LoggingClass.ENTRY_END, null, null, null, null, true);
             } else {
-                if (currentTrialForPin >= PRACTICE_TRIALS)
+                if (currentTrialForPin >= PRACTICE_TRIALS) {
                     ChangeClientMode(TechniqueClientController.ModeType.ContinueNoFeedback);
-                else
+                } else {
                     ChangeClientMode(TechniqueClientController.ModeType.ContinueIncorrect);
-                LoggingClass.AppendToLog("Pin entry finished", "fail");
+                }
+                LoggingClass.AppendToLog(LoggingClass.ENTRY_END, null, null, null, null, false);
             }
 
             // TODO use somewhere: (in the case that feedback is disabled, regardless of correctness)
@@ -149,6 +154,11 @@ public class ExperimentServerController : ExperimentController {
             SetCurrentPinTrial(currentTrialForPin);
 
             if(currentTrialForPin >= PRACTICE_TRIALS){
+                if (currentPinTested == 0) {
+                    OnClientRoundNotification?.Invoke(TechniqueClientController.NotificationType.Round1Normal);
+                } else {
+                    OnClientRoundNotification?.Invoke(TechniqueClientController.NotificationType.Round2Normal);
+                }
                 OnClientFeedbackEnabledChanged?.Invoke(false);
             }
 
@@ -161,9 +171,9 @@ public class ExperimentServerController : ExperimentController {
                 currentTrialForPin = 0;
                 if (currentPinTested == (PINS_PER_PARTICIPANT - 1)){
                     OnClientFeedbackEnabledChanged?.Invoke(true);
-                    OnClientRoundNotification?.Invoke(TechniqueClientController.NotificationType.Round2);
+                    OnClientRoundNotification?.Invoke(TechniqueClientController.NotificationType.Round2Practice);
                 }
-                if (currentPinTested == 2)
+                if (currentPinTested == PINS_PER_PARTICIPANT)
                 {
                     OnClientRoundNotification?.Invoke(TechniqueClientController.NotificationType.Finished);
                 }
@@ -183,13 +193,15 @@ public class ExperimentServerController : ExperimentController {
     }
 
     public void ClientStart() {
-        // fill in: sets client mode to entering
+        LoggingClass.AppendToLog(LoggingClass.ENTRY_START, null, null, null, null, null);
         ChangeClientMode(TechniqueClientController.ModeType.Entering);
     }
 
     public void ClientContinue() {
-        // fill in: sets client mode to entering
-        // TODO if we're done, do nothing
+        if (currentPinTested == PINS_PER_PARTICIPANT) {
+            return;
+        }
+        LoggingClass.AppendToLog(LoggingClass.ENTRY_START, null, null, null, null, null);
         ChangeClientMode(TechniqueClientController.ModeType.Entering);
     }
 
@@ -197,7 +209,7 @@ public class ExperimentServerController : ExperimentController {
     {
         currentPinTested = passedCurrentPinTested;
         LoggingClass.ExperimentPinNumber = currentTrialForPin.ToString();
-        LoggingClass.ActualPin = PINPins[currentPinTested];
+        LoggingClass.ActualPin = CurrentCorrectPinString.Replace(',', '-');
         //Debug.Log("setLoggerPinTestedNumber: " + currentTrailForPin.ToString());
         //Debug.Log("setLoggerActualPin: " + PINPins[currentPinTested]);
     }
@@ -207,5 +219,9 @@ public class ExperimentServerController : ExperimentController {
         currentTrialForPin = passedcurrentTrialForPin;
         //Debug.Log("setLoggerPinTrailNumber: " + passedcurrentTrailForPin.ToString());
         LoggingClass.TrialNumber = passedcurrentTrialForPin.ToString();
+    }
+
+    private void SetLoggerCurrentEnteredPin(string pinString) {
+        LoggingClass.EnteredPin = pinString.Replace(',', '-');
     }
 }

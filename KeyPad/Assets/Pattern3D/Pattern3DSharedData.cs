@@ -6,9 +6,9 @@ public static class Pattern3DSharedData {
     public static float leftOffset = 50;
     public static float topOffset = 438;
     public static float spacing = 120;
-    public static float spacingZ = 240;
+    public static float spacingZ = 140;
     public static float spacingProjDepth = 40;
-    public static float minScreenZ = 200;
+    public static float minScreenZ = 90;
 
 
     public class ProjPoint {
@@ -22,9 +22,9 @@ public static class Pattern3DSharedData {
         get {
             if (pointCache3D == null) {
                 pointCache3D = new List<ProjPoint>();
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 3; j++) {
-                        for (int k = 0; k < 3; k++) {
+                for (int k = 0; k < 3; k++) {
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 0; j < 3; j++) {
                             pointCache3D.Add(
                                 new ProjPoint {
                                     pt = new Vector2(leftOffset + spacing * j + k * spacingProjDepth, topOffset + spacing * i - k * spacingProjDepth),

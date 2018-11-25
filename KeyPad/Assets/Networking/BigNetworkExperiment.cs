@@ -10,39 +10,38 @@ public class BigNetworkExperiment : NetworkBehaviour {
 
     [Command]
     void CmdBeginDrag() {
+        LoggingClass.AppendToLog(LoggingClass.DRAG_START, null, null, null, null, null);
         serverController.OnBeginDrag();
-        LoggingClass.AppendToLog("DRAG BEGIN: ", "Drag begin!");
     }
 
     [Command]
     void CmdEndDrag() {
+        LoggingClass.AppendToLog(LoggingClass.DRAG_END, null, null, null, null, null);
         serverController.OnEndDrag();
-        LoggingClass.AppendToLog("DRAG END: ", "Drag end!");
     }
 
     [Command]
     void CmdOnDrag(Vector2 pos) {
+        LoggingClass.AppendToLog(LoggingClass.DRAG_MOVE, pos.x, pos.y, null, null, null);
         serverController.OnDrag(pos);
-        LoggingClass.AppendToLog("DRAG: ", pos.ToString());
     }
 
     [Command]
     void CmdOnButtonPress(string text) {
         if (text == ExperimentServerController.START) {
-            LoggingClass.AppendToLog("CLIENT START", "");
             data.experimentServerController.ClientStart();
             return;
         }
         if (text == ExperimentServerController.CONTINUE) {
-            LoggingClass.AppendToLog("CLIENT CONTINUE", "");
             data.experimentServerController.ClientContinue();
             return;
         }
+        LoggingClass.AppendToLog(LoggingClass.BUTTON_PRESS, null, null, null, text, null);
         serverController.OnButtonPress(text);
         // TODO: remove commented line once experiment server controller knows
         // when EnteredNumbers changes
         //data.experimentServerController.DigitEntered(text);
-        LoggingClass.AppendToLog("BUTTON PRESSED: ", text);
+        
     }
 
     void XBeginDrag() {
@@ -79,6 +78,18 @@ public class BigNetworkExperiment : NetworkBehaviour {
 
     [ClientRpc]
     void RpcEnteredNumbersChanged(int[] numbers) {
+        
+        if (Application.platform == RuntimePlatform.Android) {
+            AndroidJavaClass unity = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+            AndroidJavaObject ca = unity.GetStatic<AndroidJavaObject>("currentActivity");
+            AndroidJavaObject sysService = ca.Call<AndroidJavaObject>("getSystemService", "vibrator");
+            sysService.Call("vibrate", 15L);
+
+            unity.Dispose();
+            ca.Dispose();
+            sysService.Dispose();
+        }
+        
         clientController.EnteredNumbers = new List<int>(numbers);
     }
 

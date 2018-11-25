@@ -18,13 +18,11 @@ public abstract class TechniqueClientController : MonoBehaviour {
     public Button startButton;
     public Button continueButton;
     public Text correctPinText;
-    public Text noticationText;
+    public Text notificationText;
 
     public enum ModeType { Start, Entering, ContinueNoFeedback, ContinueCorrect, ContinueIncorrect };
-    public ModeType Mode { get; set; }
 
-    public enum NotificationType { Round1, Round2, Finished };
-    public NotificationType notification { get; set; }
+    public enum NotificationType { Round1Practice, Round1Normal, Round2Practice, Round2Normal, Finished };
 
     public ButtonController buttonController;
 
@@ -65,7 +63,13 @@ public abstract class TechniqueClientController : MonoBehaviour {
     }
 
     public void UpdateNotificationText(NotificationType notification){
-        noticationText.text = notification.ToString();
+        switch (notification) {
+            case NotificationType.Round1Practice: notificationText.text = "Round #1\nPractice Round"; break;
+            case NotificationType.Round1Normal: notificationText.text = "Round #1"; break;
+            case NotificationType.Round2Practice: notificationText.text = "Round #2\nPractice Round"; break;
+            case NotificationType.Round2Normal: notificationText.text = "Round #2"; break;
+            case NotificationType.Finished: notificationText.text = "Finished Technique"; break;
+        }
     }
 
     public abstract void ChangeFeedbackEnabled(bool enabled_);

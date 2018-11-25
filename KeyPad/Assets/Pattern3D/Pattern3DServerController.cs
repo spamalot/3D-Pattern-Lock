@@ -19,7 +19,7 @@ public class Pattern3DServerController : TechniqueServerController {
             var posxy = new Vector2(pos.x, pos.y);
             var actualPt = Pattern3DSharedData.Points3D[i].actualPt;
             var actualPtxy = new Vector2(actualPt.x, actualPt.y);
-            if (Vector2.Distance(posxy, actualPt) < Pattern3DSharedData.spacing * 0.4f
+            if (Vector2.Distance(posxy, actualPt) < Pattern3DSharedData.spacing * 0.2f
                 && Mathf.Abs(pos.z - actualPt.z) < Pattern3DSharedData.spacingZ * 0.499f) {
                 return i;
             }
@@ -34,6 +34,11 @@ public class Pattern3DServerController : TechniqueServerController {
             return;
         }
 
+
+        LoggingClass.AppendToLog(
+            LoggingClass.VICON,
+            localCoordThing.posn.x, localCoordThing.posn.y, localCoordThing.posn.z,
+            null, null);
 
         //
         // Calculate cursor position
@@ -75,10 +80,11 @@ public class Pattern3DServerController : TechniqueServerController {
 
         if (!EnteredNumbers.Contains(gc)) {
             EnteredNumbers.Add(gc);
+            InvokeOnEnteredNumbersChanged();
 
         }
 
-        InvokeOnEnteredNumbersChanged();
+       
         
     }
 

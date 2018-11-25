@@ -19,9 +19,10 @@ public class PatternServerController : TechniqueServerController {
 
         if (!EnteredNumbers.Contains(cell)) {
             EnteredNumbers.Add(cell);
+            InvokeOnEnteredNumbersChanged();
         }
 
-        InvokeOnEnteredNumbersChanged();
+       
     }
 
 
@@ -34,7 +35,7 @@ public class PatternServerController : TechniqueServerController {
     int? NearestGridCell(Vector2 pos) {
 
         for (int i = 0; i < 9; i++) {
-            if (Vector2.Distance(pos, PatternSharedData.Points[i]) < PatternSharedData.spacing * 0.4f) {
+            if (Vector2.Distance(pos, PatternSharedData.Points[i]) < PatternSharedData.spacing * 0.2f) {
                 return i;
             }
         }

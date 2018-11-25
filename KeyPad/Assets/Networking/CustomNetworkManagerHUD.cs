@@ -81,7 +81,7 @@ public class CustomNetworkManagerHUD : MonoBehaviour {
                 manager.networkAddress = GUI.TextField(new Rect(xpos + 100, ypos, 95, 20), manager.networkAddress);
                 ypos += spacing;
 
-                /*if (UnityEngine.Application.platform == RuntimePlatform.WebGLPlayer)
+                if (UnityEngine.Application.platform == RuntimePlatform.WebGLPlayer)
                 {
                     // cant be a server in webgl build
                     GUI.Box(new Rect(xpos, ypos, 200, 25), "(  WebGL cannot be server  )");
@@ -94,7 +94,7 @@ public class CustomNetworkManagerHUD : MonoBehaviour {
                         manager.StartServer();
                     }
                     ypos += spacing;
-                }*/
+                }
             } else {
                 GUI.Label(new Rect(xpos, ypos, 200, 20), "Connecting to " + manager.networkAddress + ":" + manager.networkPort + "..");
                 ypos += spacing;
@@ -137,7 +137,7 @@ public class CustomNetworkManagerHUD : MonoBehaviour {
             ypos += spacing;
         }
 
-        /*if (!NetworkServer.active && !manager.IsClientConnected() && noConnection)
+        if (!NetworkServer.active && !manager.IsClientConnected() && noConnection)
         {
             ypos += 10;
 
@@ -237,6 +237,6 @@ public class CustomNetworkManagerHUD : MonoBehaviour {
                 }
                 ypos += spacing;
             }
-        }*/
+        }
     }
 }

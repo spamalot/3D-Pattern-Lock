@@ -16,7 +16,11 @@ public class LocalCoordThing : MonoBehaviour {
         var unitScale = 1.0f / phoneWidth;
         var p = transform.localPosition;
 
-        var xyz = new Vector3((p.x * unitScale + 0.5f) * pixelWidth, aspect* pixelWidth - (p.y * unitScale + 0.5f * aspect) * pixelWidth, -p.z);
+        // 0.4f should be 0.5f, but funny screen aspect ratio throws this off
+        var xyz = new Vector3(
+            (p.x * unitScale + 0.5f) * pixelWidth,
+            aspect * pixelWidth - (p.y * unitScale + 0.4f * aspect) * pixelWidth,
+            -p.z);
         posn = new Vector3(xyz.x, xyz.y, xyz.z * pixelWidth * unitScale);
 
     }

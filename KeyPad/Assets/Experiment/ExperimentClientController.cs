@@ -26,6 +26,9 @@ public class ExperimentClientController : ExperimentController {
         controller.gameObject.SetActive(true);
         techniqueClientPointer.Controller = controller;
         OnClientReady?.Invoke();
+#if UNITY_ANDROID
+        Handheld.Vibrate(); // to add permissions to manifest
+#endif
     }
 
 }
