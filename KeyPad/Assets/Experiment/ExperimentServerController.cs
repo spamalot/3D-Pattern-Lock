@@ -32,8 +32,8 @@ public class ExperimentServerController : ExperimentController {
     private int currentPinTested = 0; //0 for the first pin: 1 for the second pin
     private int currentTrialForPin = 0; //how many times the user has tried to enter the pin.
 
-    private const int TOTAL_TRIALS = 8;
-    private const int PRACTICE_TRIALS = 3;
+    private const int TOTAL_TRIALS = 10;
+    private const int PRACTICE_TRIALS = 5;
     private const int PINS_PER_PARTICIPANT = 2;
     // extra var for number of practice rounds
 
@@ -150,7 +150,7 @@ public class ExperimentServerController : ExperimentController {
 
             _controller.ResetEnteredNumbers();
 
-            currentTrialForPin+=1;
+            currentTrialForPin++;
             SetCurrentPinTrial(currentTrialForPin);
 
             if(currentTrialForPin >= PRACTICE_TRIALS){
@@ -166,9 +166,10 @@ public class ExperimentServerController : ExperimentController {
             // OnClientFeedbackEnabledChanged?.Invoke(false);
 
             if (currentTrialForPin == TOTAL_TRIALS) { //changing the current pin tested.
-                currentPinTested+=1;
+                currentPinTested++;
                 SetCurrentPin(currentPinTested);
                 currentTrialForPin = 0;
+                SetCurrentPinTrial(currentTrialForPin);
                 if (currentPinTested == (PINS_PER_PARTICIPANT - 1)){
                     OnClientFeedbackEnabledChanged?.Invoke(true);
                     OnClientRoundNotification?.Invoke(TechniqueClientController.NotificationType.Round2Practice);
@@ -208,7 +209,7 @@ public class ExperimentServerController : ExperimentController {
     private void SetCurrentPin(int passedCurrentPinTested)
     {
         currentPinTested = passedCurrentPinTested;
-        LoggingClass.ExperimentPinNumber = currentTrialForPin.ToString();
+        LoggingClass.ExperimentPinNumber = currentPinTested.ToString();
         LoggingClass.ActualPin = CurrentCorrectPinString.Replace(',', '-');
         //Debug.Log("setLoggerPinTestedNumber: " + currentTrailForPin.ToString());
         //Debug.Log("setLoggerActualPin: " + PINPins[currentPinTested]);

@@ -6,9 +6,9 @@ public static class Pattern3DSharedData {
     public static float leftOffset = 50;
     public static float topOffset = 438;
     public static float spacing = 120;
-    public static float spacingZ = 140;
+    public static float spacingZ = 130;
     public static float spacingProjDepth = 40;
-    public static float minScreenZ = 90;
+    public static float minScreenZ = 110;
 
 
     public class ProjPoint {
