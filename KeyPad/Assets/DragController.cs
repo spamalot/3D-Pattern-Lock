@@ -9,6 +9,7 @@ public class DragController : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 
     public event Action OnPressed;
     public event Action OnReleased;
+    public event Action<Vector2> OnDragged;
 
     void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
     {
@@ -24,6 +25,8 @@ public class DragController : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         RectTransformUtility.ScreenPointToLocalPointInRectangle(r, eventData.position, null, out x);
         x += new Vector2(r2.x, -r2.y) / 2;
         posn = Util.CanvasToPixel(x);
+        OnDragged?.Invoke(posn);
+
     }
 
     void IEndDragHandler.OnEndDrag(PointerEventData eventData)

@@ -4,46 +4,125 @@ using System;
 using UnityEngine.UI;
 using UnityEngine;
 
-public class UserInput : PinTechnique {
+public class UserInput : TechniqueClientController {
 
-    public GameObject[] buttons;
+    public GameObject buttonPrefab;
+    public Transform buttonContainer;
     public Text txtInput;
+    List<Button> buttons = new List<Button>();
+
+    public Button CreateButton(Vector2 pos)
+    {
+        GameObject button = Instantiate(buttonPrefab);
+        button.transform.SetParent(buttonContainer);
+        button.GetComponent<RectTransform>().anchoredPosition = pos;
+        return button.GetComponent<Button>();
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        float startX = -24;
+        float startY = -316;
+        float spacingX = 132;
+        float spacingY = 92;
+
+        buttons.Add(CreateButton(new Vector2(startX + spacingX * 2, startY - spacingY * 4)));
+        for (int i = 0; i < 3; i++)
+        {
+            startY = startY - spacingY;
+            startX = -24;
+            for (int j = 0; j < 3; j++)
+            {
+                startX = startX + spacingX;
+                buttons.Add(CreateButton(new Vector2(startX, startY)));
+            }
+        }
+
+        for (int i = 0; i < 10; i++)
+        {
+            var x = i; // curry i (C# doesn't support this nicely any other way)
+            buttons[i].onClick.AddListener(() => buttonController.ButtonPressed(x.ToString()));
+        }
+    }
+
+    void Update(){
+        txtInput.text = "";
+        for (int i = 0; i < EnteredNumbers.Count; i++){
+            txtInput.text = txtInput.text + "*";
+        }
+    }
+
+
+
+    public override void ChangeFeedbackEnabled(bool enabled_) {
+        // do nothing
+    }
+
+    /*
+     
+    public GameObject buttonPrefab;
+    public Transform buttonContainer;
+    public Text txtInput;
+
+    public ButtonController buttonController;
+  
+    List<Button> buttons = new List<Button>();
 
     Gyroscope m_Gyro;
     private string passwordEntered;
     
-    // Use this for initialization
-    void Start () {
+    protected override void Start () {
+        base.Start();
+
         m_Gyro = Input.gyro;
         m_Gyro.enabled = true;
+
+        float startX = -24;
+        float startY = -316;
+        float spacingX = 132;
+        float spacingY = 92;
         numsSoFar.Clear();
-    }
 
-    void Awake ()
-    {
-
-
-    }
-
-    // Update is called once per frame
-    void Update () {
-        /*
-        if (Input.touchCount > 0) {
-            //Touch myTouch = Input.touches[0];
-            Touch myTouch = Input.GetTouch(0);
-            if (myTouch.phase == TouchPhase.Began)
-            {
-                Debug.Log("PIN ENTRY " + System.DateTime.Now + " : Begun " + myTouch.position + "\n");
-            }else if(myTouch.phase == TouchPhase.Ended)
-            {
-                Debug.Log("PIN ENTRY " + System.DateTime.Now + " :  End " + myTouch.position + "\n");
-            }
-            else
-            {
-                Debug.Log("PIN ENTRY " + System.DateTime.Now + " : " + myTouch.position);
+        buttons.Add(CreateButton(new Vector2(startX + spacingX * 2, startY - spacingY * 4)));
+        for (int i = 0; i < 3; i++) {
+            startY = startY - spacingY;
+            startX = -24;
+            for (int j = 0; j < 3; j++){
+                startX = startX + spacingX;
+                buttons.Add(CreateButton(new Vector2(startX, startY)));
             }
         }
-        */
+      
+        for (int i = 0; i < 10; i++) {
+            var x = i; // curry i (C# doesn't support this nicely any other way)
+            buttons[i].onClick.AddListener(() => OnClickBtn(x));
+            // TODO: just call buttonController.ButtonPressed with button's text
+        }
+
+
+       
+
+    }
+
+    void Update () {
+    
+        //if (Input.touchCount > 0) {
+        //    //Touch myTouch = Input.touches[0];
+        //    Touch myTouch = Input.GetTouch(0);
+        //    if (myTouch.phase == TouchPhase.Began)
+        //    {
+        //        Debug.Log("PIN ENTRY " + System.DateTime.Now + " : Begun " + myTouch.position + "\n");
+        //    }else if(myTouch.phase == TouchPhase.Ended)
+        //    {
+        //        Debug.Log("PIN ENTRY " + System.DateTime.Now + " :  End " + myTouch.position + "\n");
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("PIN ENTRY " + System.DateTime.Now + " : " + myTouch.position);
+        //    }
+        //}
+  
 
        // Debug.Log("Gyro rotation rate " + m_Gyro.rotationRate);
        // Debug.Log("Gyro attitude" + m_Gyro.attitude);
@@ -57,11 +136,12 @@ public class UserInput : PinTechnique {
         Debug.Log(passwordEntered);
         passwordEntered = "";
         txtInput.text = "";
-        Commit();
+        //Commit();
     }
    
-    public void OnClickBtn(int buttPressed)
+     void OnClickBtn(int buttPressed)
     {
+        Debug.Log("num: " + buttPressed);
         txtInput.text = txtInput.text + "*";
         numsSoFar.Add(buttPressed);
         passwordEntered = passwordEntered + buttPressed.ToString();
@@ -71,5 +151,13 @@ public class UserInput : PinTechnique {
         }
     }
 
- 
+    public Button CreateButton(Vector2 pos)
+    {
+        GameObject button = Instantiate(buttonPrefab);
+        button.transform.SetParent(buttonContainer);
+        button.GetComponent<RectTransform>().anchoredPosition = pos;
+        return button.GetComponent<Button>();
+    }
+    */
+
 }
